@@ -10,6 +10,8 @@ public class Calculadora : MonoBehaviour {
 	public float anchoBoton = 50;
 	public float altoBoton = 50;
 	
+	float altoResultado = 50;
+	
 	string resultado = "0";
 	int resultadoInterno = 0;
 	string operacion="+";
@@ -26,23 +28,22 @@ public class Calculadora : MonoBehaviour {
 		
 	}
 	
-	void OnGUI () {
-		GUI.Label(new Rect(margenIzquierdo,margenSuperior,170,50), resultado);
+	void OnGUI () { 
+		float anchoResultado = 3*anchoBoton + 2*margenBoton;
+		GUI.Label(new Rect(margenIzquierdo,margenSuperior,anchoResultado,altoResultado), resultado);
 		
 		//Numero del 1 al 9
 		for(int fila = 0; fila < 3; fila++){			
 			for(int columna = 0; columna < 3; columna++){
 				int numero = 1 + 3 * (2-fila) + columna;				
-				float x = margenIzquierdo + columna * (anchoBoton + margenBoton);
-				float y = margenSuperior + 50 + fila * (altoBoton + margenBoton);			
-				Rect rectangulo = new Rect(x,y,anchoBoton,altoBoton);
+				Rect rectangulo = RectanguloFilaColumna(fila+1, columna+1);
 				PintarNumero(rectangulo, numero);
 			}			
 		}
 		
 		//Numero Cero
 		float xCero = margenIzquierdo;
-		float yCero = margenSuperior + 3 * (margenBoton+altoBoton) + 50;
+		float yCero = margenSuperior + 3 * (margenBoton+altoBoton) + altoResultado;
 		Rect rectCero = new Rect(xCero, yCero, (3*anchoBoton + 2*margenBoton), altoBoton);
 		PintarNumero(rectCero, 0);
 		
@@ -50,9 +51,7 @@ public class Calculadora : MonoBehaviour {
 		float colCuatro = margenIzquierdo + 3 * (margenBoton+anchoBoton);
 		
 		//RESET	
-		//float xSuma = margenIzquierdo + 3 * (margenBoton+anchoBoton);
-		float yReset = margenSuperior + 0 * (margenBoton+anchoBoton) + 50;
-		Rect rectReset = new Rect(colCuatro, yReset, anchoBoton, altoBoton);
+		Rect rectReset = RectanguloFilaColumna(1, 4);
 		if (GUI.Button(rectReset, "CE")) {
 			resultadoInterno=0;
 			resultado = "0";
@@ -60,26 +59,18 @@ public class Calculadora : MonoBehaviour {
 			operacion="+";
 		}
 		
-		//SUMA	
-		//float xSuma = margenIzquierdo + 3 * (margenBoton+anchoBoton);
-		float ySuma = margenSuperior + 2 * (margenBoton+anchoBoton) + 50;
-		Rect rectSuma = new Rect(colCuatro, ySuma, anchoBoton, altoBoton);
+		//SUMA
+		Rect rectSuma = RectanguloFilaColumna(3, 4);
 		PintarOperador(rectSuma, "+");
 		
 		
 		//RESTA
-		//float xResta = margenIzquierdo + 3 * (margenBoton+anchoBoton);
-		float yResta = margenSuperior + 1 * (margenBoton+anchoBoton) + 50;
-		Rect rectResta = new Rect(colCuatro, yResta, anchoBoton, altoBoton);
+		Rect rectResta = RectanguloFilaColumna(2, 4);
 		PintarOperador(rectResta, "-");
 		
 		//IGUAL
-		//float xIgual = margenIzquierdo + 3 * (margenBoton+anchoBoton);
-		float yIgual = margenSuperior + 3 * (margenBoton+anchoBoton) + 50;
-		Rect rectIgual = new Rect(colCuatro, yIgual, anchoBoton, altoBoton);
+		Rect rectIgual = RectanguloFilaColumna(4, 4);
 		PintarOperador(rectIgual, "=");
-		
-		
 	}
 	
 	void CalcularResultado(){
@@ -116,5 +107,12 @@ public class Calculadora : MonoBehaviour {
 			tengoQueResetear = true;
 			operacion=operador;
 		}
+	}
+	
+	Rect RectanguloFilaColumna(int fila, int columna){
+		float x = margenIzquierdo + (columna - 1) * (anchoBoton + margenBoton);
+		float y = margenSuperior + altoResultado + (fila- 1) * (altoBoton + margenBoton);
+		Rect rectangulo = new Rect(x, y, anchoBoton, altoBoton);
+		return rectangulo;
 	}
 }
