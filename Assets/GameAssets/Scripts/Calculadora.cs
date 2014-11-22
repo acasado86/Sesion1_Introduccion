@@ -48,7 +48,7 @@ public class Calculadora : MonoBehaviour {
 		PintarNumero(rectCero, 0);
 		
 		//Operaciónes matemáticas y reset
-		float colCuatro = margenIzquierdo + 3 * (margenBoton+anchoBoton);
+		//float colCuatro = margenIzquierdo + 3 * (margenBoton+anchoBoton);
 		
 		//RESET	
 		Rect rectReset = RectanguloFilaColumna(1, 4);
