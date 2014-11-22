@@ -1,0 +1,13 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/GameAssets/Scripts/Calculadora.cs">
+    <Files>
+      <File FileName="Assets/GameAssets/Scripts/HolaMundo.cs" Line="10" Column="2" />
+      <File FileName="Assets/GameAssets/Scripts/Calculadora.cs" Line="40" Column="32" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
