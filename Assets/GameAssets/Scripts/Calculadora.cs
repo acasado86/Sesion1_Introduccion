@@ -36,42 +36,48 @@ public class Calculadora : MonoBehaviour {
 				float x = margenIzquierdo + columna * (anchoBoton + margenBoton);
 				float y = margenSuperior + 50 + fila * (altoBoton + margenBoton);			
 				Rect rectangulo = new Rect(x,y,anchoBoton,altoBoton);
-				if(GUI.Button(rectangulo,numero.ToString()))
-				{
-					if(tengoQueResetear) { 
-						resultado = ""; 
-						tengoQueResetear = false;
-					}
-					resultado = resultado + numero.ToString();
-				}
+				PintarNumero(rectangulo, numero);
 			}			
 		}
 		
-		//Operaciónes matemáticas
-		//SUMA
-		float xSuma = margenIzquierdo + 3 * (margenBoton+anchoBoton);
-		float ySuma = margenSuperior + 2 * (margenBoton+anchoBoton) + 50;
-		Rect rectSuma = new Rect(xSuma, ySuma, anchoBoton, altoBoton);
-		if (GUI.Button(rectSuma, "+")) {
-			if (!tengoQueResetear)
-				CalcularResultado();
+		//Numero Cero
+		float xCero = margenIzquierdo;
+		float yCero = margenSuperior + 3 * (margenBoton+altoBoton) + 50;
+		Rect rectCero = new Rect(xCero, yCero, (3*anchoBoton + 2*margenBoton), altoBoton);
+		PintarNumero(rectCero, 0);
+		
+		//Operaciónes matemáticas y reset
+		float colCuatro = margenIzquierdo + 3 * (margenBoton+anchoBoton);
+		
+		//RESET	
+		//float xSuma = margenIzquierdo + 3 * (margenBoton+anchoBoton);
+		float yReset = margenSuperior + 0 * (margenBoton+anchoBoton) + 50;
+		Rect rectReset = new Rect(colCuatro, yReset, anchoBoton, altoBoton);
+		if (GUI.Button(rectReset, "CE")) {
+			resultadoInterno=0;
+			resultado = "0";
 			tengoQueResetear = true;
 			operacion="+";
-			resultado=resultadoInterno.ToString();
 		}
+		
+		//SUMA	
+		//float xSuma = margenIzquierdo + 3 * (margenBoton+anchoBoton);
+		float ySuma = margenSuperior + 2 * (margenBoton+anchoBoton) + 50;
+		Rect rectSuma = new Rect(colCuatro, ySuma, anchoBoton, altoBoton);
+		PintarOperador(rectSuma, "+");
 		
 		
 		//RESTA
-		float xResta = margenIzquierdo + 3 * (margenBoton+anchoBoton);
+		//float xResta = margenIzquierdo + 3 * (margenBoton+anchoBoton);
 		float yResta = margenSuperior + 1 * (margenBoton+anchoBoton) + 50;
-		Rect rectResta = new Rect(xResta, yResta, anchoBoton, altoBoton);
-		if (GUI.Button(rectResta, "-")) {
-			if (!tengoQueResetear)
-				CalcularResultado();
-			tengoQueResetear = true;
-			operacion="-";
-			resultado=resultadoInterno.ToString();
-		}
+		Rect rectResta = new Rect(colCuatro, yResta, anchoBoton, altoBoton);
+		PintarOperador(rectResta, "-");
+		
+		//IGUAL
+		//float xIgual = margenIzquierdo + 3 * (margenBoton+anchoBoton);
+		float yIgual = margenSuperior + 3 * (margenBoton+anchoBoton) + 50;
+		Rect rectIgual = new Rect(colCuatro, yIgual, anchoBoton, altoBoton);
+		PintarOperador(rectIgual, "=");
 		
 		
 	}
@@ -86,6 +92,29 @@ public class Calculadora : MonoBehaviour {
 			resultadoInterno -= int.Parse(resultado);
 			resultado=resultadoInterno.ToString();
 			break;
+		}
+	}
+	
+	void PintarNumero(Rect rectangulo, int numero){
+		if(GUI.Button(rectangulo,numero.ToString()))
+		{
+			if(tengoQueResetear) { 
+				resultado = ""; 
+				tengoQueResetear = false;
+			}
+			if (resultado!="0")
+				resultado = resultado + numero.ToString();
+			else
+				resultado=numero.ToString();
+		}
+	}
+	
+	void PintarOperador(Rect rectangulo, string operador){
+		if (GUI.Button(rectangulo, operador)) {
+			if (!tengoQueResetear)
+				CalcularResultado();
+			tengoQueResetear = true;
+			operacion=operador;
 		}
 	}
 }
